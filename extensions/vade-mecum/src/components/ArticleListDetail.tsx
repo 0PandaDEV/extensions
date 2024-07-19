@@ -144,9 +144,12 @@ export default function ArticleListDetail({ law }: ArticleListDetailsProps) {
             icon={Icon.Paragraph}
             detail={<List.Item.Detail markdown={article.content} />}
             actions={
-              <ActionPanel>
-                <Action.CopyToClipboard title="Copy Article" content={article.content} />
-                <Action.OpenInBrowser url={law.url} />
+              <ActionPanel title={article.title}>
+                <Action.Paste title="Paste Article in Active App" content={article.content.replace(/`/g, "")} />
+                <Action.CopyToClipboard title="Copy Article" content={article.content.replace(/`/g, "")} />
+                <ActionPanel.Section>
+                  <Action.OpenInBrowser url={law.url} shortcut={{ modifiers: ["opt", "cmd"], key: "o" }} />
+                </ActionPanel.Section>
               </ActionPanel>
             }
           />

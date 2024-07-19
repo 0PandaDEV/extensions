@@ -1,5 +1,67 @@
 # Changelog
 
+## 1.79.0 - 2024-07-17
+
+### ✨ New
+
+- **Navigation**: Added a second argument to `useNavigation().push` to specify a callback called when the pushed view will be popped. You can use it to update the current view when it will become active again. There’s also a new `onPop` prop on `Action.Push` to do the same thing.
+
+### 💎 Improvements
+
+- When creating or forking an extension, an alert will be shown if you specify an existing folder (and thus avoid overwriting files without warning)
+
+## 1.78.0 - 2024-07-03
+
+### ✨ New
+
+- In addition to the new Custom Window Management commands, we are introducing a `WindowManagement` API to give you total control to move your windows depending on any kind of logic you can imagine.
+- You can now access the `ownerOrAuthorName` in the `environment`, useful for re-usable libraries.
+
+### 🐞 Fixes
+
+- **Pagination**: Fixed the TypeScript definition of the `onLoadMore` callback.
+
+## 1.77.0 - 2024-06-19
+
+### ✨ New
+
+- Updated React version to 18.3.1 to prepare for the next major version of React. This shouldn't impact any extensions but let us know if you find any unexpected behaviour.
+
+### 🐞 Fixes
+
+- **Menu Bar Extra**: fixed an issue where `Submenu` icons changed appearance based on Raycast's appearance, instead of the system's.
+
+## 1.76.0 - 2024-06-05
+
+### 💎 Improvements
+
+- Some companies requires all package.json’s names to be name-spaced (eg. `@foo/bar`). However, Raycast only understands names that _aren’t_ name-spaced. This prevented some people from creating internal extensions. In order to workaround this issue, you can now use the `@workaround` namespace in extension names (eg. `@workaround/bar`).
+
+### 🐞 Fixes
+
+- **Clipboard**: Fixed an issue where 2 items were added to the pasteboard when copying a file (one with the file name, and one with the file url). It now correctly adds 1 item with 2 representations.
+
+## 1.74.0 - 2024-05-15
+
+### ✨ New
+
+- **AI:** The models available in the API now matches the ones available in the app (eg. GPt-4o, Llama-3, etc.). As part of this, the models are now part of an enum `AI.Model` which will make it easier to add and deprecate them as time goes on.
+- **Utils:** we’ve added a new React hook called `useLocalStorage`. This hook simplifies managing a value in `LocalStorage`. Take a look at the [developer docs](https://developers.raycast.com/utilities/react-hooks/uselocalstorage) to learn more.
+
+### 💎 Improvements
+
+- **DX**: Improved the precision of warning messages when trying to add children to a react component that can’t accept them.
+
+## 1.72.0 - 2024-04-24
+
+### ✨ New
+
+- **Browser Extension**: You can now access the context of the focused browser via the Raycast Browser Extension. You can get the list of open tabs as well as the content of a tab.
+
+### 🐞 Fixes
+
+- **Grid**: Fixed a bug that caused the selected Grid item to be brought into focus when paginating.
+
 ## 1.71.0 - 2024-04-10
 
 ### ✨ New

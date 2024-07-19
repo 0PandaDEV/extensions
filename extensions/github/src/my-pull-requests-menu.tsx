@@ -1,4 +1,5 @@
 import { Color, Icon, LaunchType, getPreferenceValues, launchCommand, open } from "@raycast/api";
+import { useCachedState } from "@raycast/utils";
 
 import {
   MenuBarItem,
@@ -7,7 +8,9 @@ import {
   MenuBarSection,
   getBoundedPreferenceNumber,
 } from "./components/Menu";
+import { SortMenuBarAction } from "./components/SortAction";
 import { PullRequestFieldsFragment } from "./generated/graphql";
+import { PR_DEFAULT_SORT_QUERY, PR_SORT_TYPES_TO_QUERIES } from "./helpers/pull-request";
 import { withGitHubClient } from "./helpers/withGithubClient";
 import { SectionType, useMyPullRequests } from "./hooks/useMyPullRequests";
 
@@ -25,24 +28,27 @@ function getMaxPullRequestsPreference(): number {
   return getBoundedPreferenceNumber({ name: "maxitems" });
 }
 
-function getPullRequestStatusIcon(pr: PullRequestFieldsFragment): { source: Icon | string } {
+function getPullRequestStatusIcon(pr: PullRequestFieldsFragment): Icon | string {
   const pullRequestStatus = pr.commits.nodes ? pr.commits.nodes[0]?.commit.statusCheckRollup?.state : null;
   switch (pullRequestStatus) {
     case "SUCCESS":
-      return { source: Icon.Check };
+      return Icon.Check;
     case "ERROR":
     case "FAILURE":
-      return { source: Icon.Xmark };
+      return Icon.Xmark;
     case "PENDING":
-      return { source: Icon.Clock };
+      return Icon.Clock;
     default:
-      return { source: "pull-request-open.svg" };
+      return "pull-request-open.svg";
   }
 }
 
 function MyPullRequestsMenu() {
   const preferences = getPreferenceValues<Preferences.MyPullRequestsMenu>();
-  const { data: sections, isLoading } = useMyPullRequests(null);
+  const [sortQuery, setSortQuery] = useCachedState<string>("sort-query", PR_DEFAULT_SORT_QUERY, {
+    cacheNamespace: "github-my-pr-menu",
+  });
+  const { data: sections, isLoading } = useMyPullRequests(null, sortQuery);
 
   function displayTitle() {
     if (displayTitlePreference() !== true) {
@@ -93,7 +99,6 @@ function MyPullRequestsMenu() {
       title={displayTitle()}
       icon={{ source: "pull-request-open.svg", tintColor: Color.PrimaryText }}
       isLoading={isLoading}
-      tooltip="GitHub My Open Pull Requests"
     >
       {filteredSections().map((section) => {
         return (
@@ -114,7 +119,7 @@ function MyPullRequestsMenu() {
                 <MenuBarItem
                   key={i.id}
                   title={`#${i.number} ${i.title}`}
-                  icon={getPullRequestStatusIcon(i)}
+                  icon={{ source: getPullRequestStatusIcon(i), tintColor: Color.PrimaryText }}
                   tooltip={i.repository.nameWithOwner}
                   onAction={() => open(i.permalink)}
                 />
@@ -127,10 +132,11 @@ function MyPullRequestsMenu() {
       <MenuBarSection>
         <MenuBarItem
           title="Open My Pull Requests"
-          icon={Icon.Terminal}
+          icon={Icon.AppWindowList}
           shortcut={{ modifiers: ["cmd"], key: "o" }}
           onAction={() => launchMyPullRequestsCommand()}
         />
+        <SortMenuBarAction {...{ sortQuery, setSortQuery, data: PR_SORT_TYPES_TO_QUERIES }} />
         <MenuBarItemConfigureCommand />
       </MenuBarSection>
     </MenuBarRoot>

@@ -1,5 +1,61 @@
 # GitHub Changelog
 
+## [Repository Improvements] - 2024-07-12
+
+- Adds primary language color and code icon to the accessory for being in-sync with GitHub UI.
+- Adds "Sort By" action for My Latest Repositories with supported options
+
+## [Improvements and Fixes] - 2024-07-08
+
+- Adds an action to sort the PRs, issues, discussions and repos
+- For creating branches with no linked issues, the branch name does not need to start with `refs/heads`
+
+## [Notifications Improvements] - 2024-07-03
+
+- Fixed a bug causing unread notifications to flicker.
+- Updated HUD messages style for unread notification actions in the menu bar command.
+
+## [Improvements] - 2024-06-20
+
+- PRs: Add an option to omit team review requests from query results
+- Updated dependencies and removed high-security vulnerabilities
+
+## [Fix copy commit hash action] - 2024-06-17
+
+- Fixes an issue where the copy commit hash action incorrectly copied the commit message instead of the commit hash.
+
+## ["Create Pull Request" command] - 2024-06-03
+
+- Added typeahead search for branch selection in Create PR command.
+
+## [Add "My Projects" command] - 2024-04-25
+
+- You can now see all of your projects into a single command called `My Projects`. You can also open/close projects. NOTE: This feature requires you to change the scope of your token to include `project` permissions. If you use the OAuth login, you will need to log in again to update the token.
+
+## [Open in Browser as primary action setting] - 2024-04-22
+
+- You can now set Open in Browser as a primary action for Pull Request searches.
+
+## [Fix various icons and colors] - 2024-04-22
+
+- Fixes icons for issues and pull requests in `Notifications` and `Unread Notifications` commands.
+- Standardizes the color for all the accessories in `My Pull Requests`.
+- Fixes an issue where the pull request icon color for the `My Pull Requests Menu Bar` was not adjusted for dark mode.
+- Updates icons for `Open My Pull Requests` and `Open My Issues` menu items in the `My Pull Requests Menu Bar` and `My Issues Menu Bar` commands.
+
+## [Updated metadata images] - 2024-04-22
+
+- Updated outdated metadata images.
+
+## [Polish menu bar icon] - 2024-04-22
+
+- Use a new icon with indicator for unread state.
+- Add a new preference item `Show unread count` to allow user to hide the unread count.
+
+## [Fix recently closed issue] - 2024-04-18
+
+- Only one issue or one PR was previously shown in `My Pull Requests` or `My Issues`. It's not the case anymore!
+
 ## [Opens notification discussion links] - 2024-04-08
 
 - Opens GitHub links for notifications that point to a discussion directly.
